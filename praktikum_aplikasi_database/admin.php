@@ -1,3 +1,12 @@
+<?php
+session_start();
+include("connection/koneksi.php");
+if (@$_SESSION['userlogin'] == "") {
+    header("location:login.php?pesan=Belum Login");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,40 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SPK - Praktikum</title>
-    <style>
-        body,
-        td,
-        th {
-            font-family: Georgia, Times New Roman, Times, serif;
-            font-size: 13px;
-            color: #333333;
-        }
-
-        .style1 {
-            color: #000099;
-            font-size: 24px;
-        }
-
-        a:link {
-            text-decoration: none;
-            color: #333333;
-
-        }
-
-        a:hover {
-            text-decoration: underline;
-            color: #333333;
-        }
-
-        a:active {
-            text-decoration: none;
-            color: #333333;
-        }
-
-        .style2 {
-            font-weight: bold;
-        }
-    </style>
+    <link rel="stylesheet" href="/praktikum_aplikasi_database/css/style.css">
 </head>
 
 <body>
@@ -50,18 +26,26 @@
         <tr>
             <!-- Tabel Informasi -->
             <td height="35" bgcolor="FFFFFF">
-                <span class="style2">
-                    <a href="/praktikum_aplikasi_database/index.php">Home</a> |
-                    <a href="/praktikum_aplikasi_database/laporan.php">Laporan</a> |
-                    <a href="login.php">Login</a>
-                </span>
+
+                <a href="/praktek_web_development/praktikum_aplikasi_database/admin.php">Home</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
+                <a href="/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
+                <a href="/praktek_web_development/praktek_aplikasi_database/ganti_password.php">Ganti Password</a> |
+                <a href="/praktek_web_development/praktek_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
+
             </td>
         </tr>
         <tr>
             <!-- Pesan Selaamt Datang-->
-            <td bgcolor="FFFFFF" width="100%" border="0" cellspacing="0" cellpadding="0">
+            <td align="center" bgcolor="FFFFFF" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <strong>
-                    Selamat Datanag
+                    Halaman Admin
+                </strong>
+                <br />
+                <br />
+                <br />
+                <strong>
+                    Selamat Datang <?php echo $_SESSION['userlogin']; ?><span></span>
                 </strong>
                 <br />
                 <br />
@@ -79,8 +63,8 @@
                         <td width="53%" height="35" align="right">
                             <strong>
                                 <a href="" target="_blank">Kontak</a> |
-                                <a href="" target="_blank">About</a> 
-                                <a href="" target="_blank"></a> 
+                                <a href="" target="_blank">About</a>
+                                <a href="" target="_blank"></a>
                             </strong>
                         </td>
                     </tr>
