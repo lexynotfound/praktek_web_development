@@ -1,5 +1,5 @@
 <?php
-/* Menambah Data Kriteria*/
+/* Mengubah data alternatif per id */
 session_start();
 include("connection/koneksi.php");
 if (@$_SESSION['userlogin'] == "") {
@@ -7,17 +7,25 @@ if (@$_SESSION['userlogin'] == "") {
     exit;
 }
 if (isset($_POST['button'])) {
-    $nama_kriteria = $_POST['nama_kriteria'];
-    $kepentingan = $_POST['kepentingan'];
-    $costbenefit = $_POST['costbenefit'];
+    $nama_alternatif = $_POST['nama_alternatif'];
+    $deskripsi = $_POST['deskripsi'];
+    $id_alternatif = $_POST['id_alternatif'];
 
-    $query = "INSERT INTO kriteria (nama_kriteria, kepentingan, costbenefit) VALUES ('$nama_kriteria', '$kepentingan', '$costbenefit')";
+    $query = "UPDATE alternatif SET nama_alternatif = '$nama_alternatif', deskripsi = '$deskripsi' WHERE id_alternatif = '$id_alternatif'";
     if (mysqli_query($koneksi, $query)) {
-        header("location: kriteria.php");
+        header("location: alternatif.php");
         exit();
     } else {
         echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
     }
+}
+
+// Retrieve alternative data for editing
+if (isset($_GET['id_alternatif'])) {
+    $id_alternatif = $_GET['id_alternatif'];
+    $queryGetAlternative = "SELECT * FROM alternatif WHERE id_alternatif = '$id_alternatif'";
+    $result = mysqli_query($koneksi, $queryGetAlternative);
+    $dataalternatif = mysqli_fetch_assoc($result);
 }
 ?>
 
@@ -46,7 +54,6 @@ if (isset($_POST['button'])) {
                 <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif.php">Alternatif</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
-                <a href="/praktek_web_development/praktikum_aplikasi_database/laporan.php">Laporan</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/ganti_password.php">Ganti Password</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
 
@@ -56,29 +63,25 @@ if (isset($_POST['button'])) {
             <!-- Pesan Selamat Datang-->
             <td align="center" valign="top" bgcolor="FFFFFF" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <strong>
-                    Tambah Data Kriteria
+                    Tambah Data Alternatif
                 </strong>
                 <br />
                 <br />
                 <form id="form1" name="form1" action="" method="post">
                     <table width="350" border="0" cellpadding="5" cellspacing="1" bgcolor="#F00099">
                         <tr>
+                            <td width="128" bgcolor="#FFFFFF">ID Alternatif</td>
+                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="id_alternatif" id="id_alternatif" readonly value="<?php echo isset($dataalternatif['id_alternatif']) ? $dataalternatif['id_alternatif'] : ''; ?>"></td>
                             <td width="128" bgcolor="#FFFFFF">Nama</td>
-                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="nama_kriteria" id="nama_kriteria"></td>
-                            <td bgcolor="#FFFFFF">Kepentingan</td>
-                            <td bgcolor="#FFFFFF"><input type="text" name="kepentingan" id="kepentingan"></td>
-                            <td bgcolor="#FFFFFF">Cost Benefit</td>
-                            <td bgcolor="#FFFFFF">
-                                <select name="costbenefit" id="costbenefit">
-                                    <option value=""></option>
-                                    <option value="cost">Cost</option>
-                                    <option value="benefit">Benefit</option>
-                                </select>
-                            </td>
+                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="nama_alternatif" id="nama_alternatif" value="<?php echo isset($dataalternatif['nama_alternatif']) ? $dataalternatif['nama_alternatif'] : ''; ?>"></td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#FFFFFF">Deskripsi</td>
+                            <td colspan="3" bgcolor="#FFFFFF"><textarea cols="30" rows="4" name="deskripsi" id="deskripsi"><?php echo isset($dataalternatif['deskripsi']) ? $dataalternatif['deskripsi'] : ''; ?></textarea></td>
                         </tr>
                         <tr>
                             <td bgcolor="#FFFFFF">&nbsp;</td>
-                            <td bgcolor="#FFFFFF"><input type="submit" name="button" id="button" value="Add"></td>
+                            <td bgcolor="#FFFFFF"><input type="submit" name="button" id="button" value="Update"></td>
                         </tr>
                     </table>
                 </form>

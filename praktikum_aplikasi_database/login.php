@@ -46,8 +46,8 @@ if (isset($_POST['button'])) {
             <!-- Tabel Informasi -->
             <td height="35" bgcolor="FFFFFF">
                 <span class="style2">
-                    <a href="/praktikum_aplikasi_database/index.php">Home</a> |
-                    <a href="/praktikum_aplikasi_database/laporan.php">Laporan</a> |
+                    <a href="index.php">Home</a> |
+                    <a href="laporan.php">Laporan</a> |
                     <a href="login.php">Login</a>
                 </span>
             </td>

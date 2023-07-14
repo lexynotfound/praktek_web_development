@@ -1,5 +1,5 @@
 <?php
-/* Menambah Data Kriteria*/
+/* Mengubah data kriteria per id */
 session_start();
 include("connection/koneksi.php");
 if (@$_SESSION['userlogin'] == "") {
@@ -10,8 +10,9 @@ if (isset($_POST['button'])) {
     $nama_kriteria = $_POST['nama_kriteria'];
     $kepentingan = $_POST['kepentingan'];
     $costbenefit = $_POST['costbenefit'];
+    $id_kriteria = $_POST['id_kriteria'];
 
-    $query = "INSERT INTO kriteria (nama_kriteria, kepentingan, costbenefit) VALUES ('$nama_kriteria', '$kepentingan', '$costbenefit')";
+    $query = "UPDATE kriteria SET nama_kriteria = '$nama_kriteria', kepentingan = '$kepentingan', costbenefit = '$costbenefit' WHERE id_kriteria = '$id_kriteria'";
     if (mysqli_query($koneksi, $query)) {
         header("location: kriteria.php");
         exit();
@@ -19,8 +20,15 @@ if (isset($_POST['button'])) {
         echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
     }
 }
-?>
 
+// Retrieve criteria data for editing
+if (isset($_GET['id_kriteria'])) {
+    $id_kriteria = $_GET['id_kriteria'];
+    $queryGetCriteria = "SELECT * FROM kriteria WHERE id_kriteria = '$id_kriteria'";
+    $result = mysqli_query($koneksi, $queryGetCriteria);
+    $datakriteria = mysqli_fetch_assoc($result);
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +54,6 @@ if (isset($_POST['button'])) {
                 <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif.php">Alternatif</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
-                <a href="/praktek_web_development/praktikum_aplikasi_database/laporan.php">Laporan</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/ganti_password.php">Ganti Password</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
 
@@ -63,22 +70,28 @@ if (isset($_POST['button'])) {
                 <form id="form1" name="form1" action="" method="post">
                     <table width="350" border="0" cellpadding="5" cellspacing="1" bgcolor="#F00099">
                         <tr>
+                            <td width="128" bgcolor="#FFFFFF">ID Kriteria</td>
+                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="id_kriteria" id="id_kriteria" readonly value="<?php echo isset($datakriteria['id_kriteria']) ? $datakriteria['id_kriteria'] : ''; ?>"></td>
                             <td width="128" bgcolor="#FFFFFF">Nama</td>
-                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="nama_kriteria" id="nama_kriteria"></td>
+                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="nama_kriteria" id="nama_kriteria" value="<?php echo isset($datakriteria['nama_kriteria']) ? $datakriteria['nama_kriteria'] : ''; ?>"></td>
                             <td bgcolor="#FFFFFF">Kepentingan</td>
-                            <td bgcolor="#FFFFFF"><input type="text" name="kepentingan" id="kepentingan"></td>
+                            <td bgcolor="#FFFFFF"><input type="text" name="kepentingan" id="kepentingan" value="<?php echo isset($datakriteria['kepentingan']) ? $datakriteria['kepentingan'] : ''; ?>"></td>
                             <td bgcolor="#FFFFFF">Cost Benefit</td>
                             <td bgcolor="#FFFFFF">
                                 <select name="costbenefit" id="costbenefit">
                                     <option value=""></option>
-                                    <option value="cost">Cost</option>
-                                    <option value="benefit">Benefit</option>
+                                    <option value="cost" <?php if (isset($datakriteria['costbenefit']) && $datakriteria['costbenefit'] == 'cost') {
+                                                                echo "selected";
+                                                            } ?>>Cost</option>
+                                    <option value="benefit" <?php if (isset($datakriteria['costbenefit']) && $datakriteria['costbenefit'] == 'benefit') {
+                                                                echo "selected";
+                                                            } ?>>Benefit</option>
                                 </select>
                             </td>
                         </tr>
                         <tr>
                             <td bgcolor="#FFFFFF">&nbsp;</td>
-                            <td bgcolor="#FFFFFF"><input type="submit" name="button" id="button" value="Add"></td>
+                            <td bgcolor="#FFFFFF"><input type="submit" name="button" id="button" value="Update"></td>
                         </tr>
                     </table>
                 </form>

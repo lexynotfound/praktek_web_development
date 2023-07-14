@@ -7,13 +7,12 @@ if (@$_SESSION['userlogin'] == "") {
 }
 
 if (isset($_POST['button'])) {
-    $nama_kriteria = $_POST['nama_kriteria'];
-    $kepentingan = $_POST['kepentingan'];
-    $costbenefit = $_POST['costbenefit'];
+    $nama_kriteria = $_POST['nama_alternatif'];
+    $kepentingan = $_POST['deskripsi'];
 
-    $query = "INSERT INTO kriteria (nama_kriteria, kepentingan, costbenefit) VALUES ('$nama_kriteria', '$kepentingan', '$costbenefit')";
+    $query = "INSERT INTO kriteria (nama_alternatif, deskripsi) VALUES ('$nama_alternatif', '$deskripsi')";
     if (mysqli_query($koneksi, $query)) {
-        header("location: kriteria.php");
+        header("location: alternatif.php");
         exit();
     } else {
         echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
@@ -39,35 +38,34 @@ if (isset($_POST['button'])) {
         </tr>
         <tr>
             <!-- Tabel Informasi -->
-                <td height="35" bgcolor="FFFFFF">
+            <td height="35" bgcolor="FFFFFF">
 
                 <a href="/praktek_web_development/praktikum_aplikasi_database/admin.php">Home</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif.php">Alternatif</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
-                <a href="/praktek_web_development/praktikum_aplikasi_database/laporan.php">Laporan</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/Laporan.php">Laporan</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/ganti_password.php">Ganti Password</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
 
-                </td>
+            </td>
         </tr>
         <tr>
             <!-- Pesan Selaamt Datang-->
             <td align="center" valign="top" bgcolor="FFFFFF" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <strong>
-                    Data Kriteria
+                    Data Alternatif
                 </strong>
                 <br />
                 <br />
-                <a href="add_kriteria.php">Tambah Data</a>
+                <a href="add_alternatif.php">Tambah Data Alternatif</a>
                 <table width="700" border="0" cellpadding="5" cellspacing="1" bgcolor="#000099">
                     <tr>
-                        <td width="79" bgcolor="FFFFFF">ID Kriteria</td>
+                        <td width="79" bgcolor="FFFFFF">ID Alternatif</td>
                         <td width="196" bgcolor="FFFFFF">Nama</td>
-                        <td width="129" bgcolor="FFFFFF">Kepentingan</td>
-                        <td width="129" bgcolor="FFFFFF">Costbenefit</td>
-                        <td width="140" bgcolor="FFFFFF"><a href="edit_kriteria.php"></a>Edit</td>
-                        <td width="140" bgcolor="FFFFFF"><a href="delete_kriteria.php"></a>Delete</td>
+                        <td width="129" bgcolor="FFFFFF">Deskripsi</td>
+                        <td width="140" bgcolor="FFFFFF"><a href="edit_alternatif.php"></a>Edit</td>
+                        <td width="140" bgcolor="FFFFFF"><a href="delete_alternatif.php"></a>Delete</td>
                     </tr>
                     <?php
                     include("connection/koneksi.php");
@@ -86,18 +84,16 @@ if (isset($_POST['button'])) {
                     }
 
                     // Fetch data using MySQLi
-                    $querykriteria = $mysqli->query("SELECT * FROM kriteria ORDER BY id_kriteria");
+                    $querykriteria = $mysqli->query("SELECT * FROM alternatif ORDER BY id_alternatif");
                     while ($datakriteria = $querykriteria->fetch_assoc()) {
                         echo "<tr>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['id_kriteria'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['nama_kriteria'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['kepentingan'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['costbenefit'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'><a href='edit_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Edit</a></td>";
-                        echo "<td bgcolor='FFFFFF'><a href='delete_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Delete</a></td>";
+                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['id_alternatif'] . "</td>";
+                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['nama_alternatif'] . "</td>";
+                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['deskripsi'] . "</td>";
+                        echo "<td bgcolor='FFFFFF'><a href='edit_alternatif.php?id_alternatif=" . $datakriteria['id_alternatif'] . "'>Edit</a></td>";
+                        echo "<td bgcolor='FFFFFF'><a href='delete_alternatif.php?id_alternatif=" . $datakriteria['id_alternatif'] . "'>Delete</a></td>";
                         echo "</tr>";
                     }
-
                     // Close the database connection
                     $mysqli->close();
                     ?>

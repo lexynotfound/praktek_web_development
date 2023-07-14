@@ -51,8 +51,8 @@
             <!-- Tabel Informasi -->
             <td height="35" bgcolor="FFFFFF">
                 <span class="style2">
-                    <a href="/praktikum_aplikasi_database/index.php">Home</a> |
-                    <a href="/praktikum_aplikasi_database/laporan.php">Laporan</a> |
+                    <a href="index.php">Home</a> |
+                    <a href="laporan.php">Laporan</a> |
                     <a href="login.php">Login</a>
                 </span>
             </td>
@@ -79,8 +79,8 @@
                         <td width="53%" height="35" align="right">
                             <strong>
                                 <a href="" target="_blank">Kontak</a> |
-                                <a href="" target="_blank">About</a> 
-                                <a href="" target="_blank"></a> 
+                                <a href="" target="_blank">About</a>
+                                <a href="" target="_blank"></a>
                             </strong>
                         </td>
                     </tr>

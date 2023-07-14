@@ -10,4 +10,3 @@ if (!$koneksi) {
     die("Failed to connect to the database: " . mysqli_connect_error());
 }
 
-echo "Connected to the database successfully!";

@@ -29,9 +29,11 @@ if (@$_SESSION['userlogin'] == "") {
 
                 <a href="/praktek_web_development/praktikum_aplikasi_database/admin.php">Home</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
-                <a href="/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
-                <a href="/praktek_web_development/praktek_aplikasi_database/ganti_password.php">Ganti Password</a> |
-                <a href="/praktek_web_development/praktek_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
+                <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif.php">Alternatif</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/alternatif_kriteria.php">Alternatif Kriteria</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/laporan.php">Laporan</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/ganti_password.php">Ganti Password</a> |
+                <a href="/praktek_web_development/praktikum_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
 
             </td>
         </tr>

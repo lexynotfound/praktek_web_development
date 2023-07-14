@@ -5,21 +5,20 @@ if (@$_SESSION['userlogin'] == "") {
     header("location:login.php?pesan= Belum Login");
     exit;
 }
-
 if (isset($_POST['button'])) {
-    $nama_kriteria = $_POST['nama_kriteria'];
-    $kepentingan = $_POST['kepentingan'];
-    $costbenefit = $_POST['costbenefit'];
+    $nama_alternatif = $_POST['nama_alternatif'];
+    $deskripsi = $_POST['deskripsi'];
 
-    $query = "INSERT INTO kriteria (nama_kriteria, kepentingan, costbenefit) VALUES ('$nama_kriteria', '$kepentingan', '$costbenefit')";
+    $query = "INSERT INTO alternatif (nama_alternatif, deskripsi) VALUES ('$nama_alternatif', '$deskripsi')";
     if (mysqli_query($koneksi, $query)) {
-        header("location: kriteria.php");
+        header("location: alternatif.php");
         exit();
     } else {
         echo "Error: " . $query . "<br>" . mysqli_error($koneksi);
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +38,7 @@ if (isset($_POST['button'])) {
         </tr>
         <tr>
             <!-- Tabel Informasi -->
-                <td height="35" bgcolor="FFFFFF">
+            <td height="35" bgcolor="FFFFFF">
 
                 <a href="/praktek_web_development/praktikum_aplikasi_database/admin.php">Home</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/kriteria.php">Kriteria</a> |
@@ -49,59 +48,30 @@ if (isset($_POST['button'])) {
                 <a href="/praktek_web_development/praktikum_aplikasi_database/ganti_password.php">Ganti Password</a> |
                 <a href="/praktek_web_development/praktikum_aplikasi_database/logout.php">Logout</a> | Anda Login Sebgaia : <?php echo $_SESSION['userlogin']; ?><span></span>
 
-                </td>
+            </td>
         </tr>
         <tr>
             <!-- Pesan Selaamt Datang-->
             <td align="center" valign="top" bgcolor="FFFFFF" width="100%" border="0" cellspacing="0" cellpadding="0">
                 <strong>
-                    Data Kriteria
+                    Tambah Data Kriteria
                 </strong>
                 <br />
                 <br />
-                <a href="add_kriteria.php">Tambah Data</a>
-                <table width="700" border="0" cellpadding="5" cellspacing="1" bgcolor="#000099">
-                    <tr>
-                        <td width="79" bgcolor="FFFFFF">ID Kriteria</td>
-                        <td width="196" bgcolor="FFFFFF">Nama</td>
-                        <td width="129" bgcolor="FFFFFF">Kepentingan</td>
-                        <td width="129" bgcolor="FFFFFF">Costbenefit</td>
-                        <td width="140" bgcolor="FFFFFF"><a href="edit_kriteria.php"></a>Edit</td>
-                        <td width="140" bgcolor="FFFFFF"><a href="delete_kriteria.php"></a>Delete</td>
-                    </tr>
-                    <?php
-                    include("connection/koneksi.php");
-
-                    // Establish the database connection using MySQLi
-                    $servername = "localhost";
-                    $username = "root";
-                    $password = "";
-                    $database = "dbpraktikum";
-
-                    $mysqli = new mysqli($servername, $username, $password, $database);
-
-                    // Check the connection
-                    if ($mysqli->connect_error) {
-                        die("Failed to connect to the database: " . $mysqli->connect_error);
-                    }
-
-                    // Fetch data using MySQLi
-                    $querykriteria = $mysqli->query("SELECT * FROM kriteria ORDER BY id_kriteria");
-                    while ($datakriteria = $querykriteria->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['id_kriteria'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['nama_kriteria'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['kepentingan'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'>" . $datakriteria['costbenefit'] . "</td>";
-                        echo "<td bgcolor='FFFFFF'><a href='edit_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Edit</a></td>";
-                        echo "<td bgcolor='FFFFFF'><a href='delete_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Delete</a></td>";
-                        echo "</tr>";
-                    }
-
-                    // Close the database connection
-                    $mysqli->close();
-                    ?>
-                </table>
+                <form id="form1" name="form1" action="" method="post">
+                    <table width="350" border="0" cellpadding="5" cellspacing="1" bgcolor="#F00099">
+                        <tr>
+                            <td width="128" bgcolor="#FFFFFF">Nama</td>
+                            <td width="249" bgcolor="#FFFFFF"><input type="text" name="nama_alternatif" id="nama_alternatif"></td>
+                            <td bgcolor="#FFFFFF">Deskripsi</td>
+                            <td bgcolor="#FFFFFF"><textarea cols="30" rows="4" name="deskripsi" id="deskripsi"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td bgcolor="#FFFFFF">&nbsp;</td>
+                            <td bgcolor="#FFFFFF"><input type="submit" name="button" id="button" value="Add"></td>
+                        </tr>
+                    </table>
+                </form>
             </td>
         </tr>
         <tr>
