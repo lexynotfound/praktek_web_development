@@ -45,13 +45,30 @@ if (@$_SESSION['userlogin'] == "") {
                 <br />
                 <table width="700" border="0" cellpadding="5" cellspacing="1" bgcolor="#000099">
                     <tr>
-                        <td width="79" bgcolor="FFFFFF" >ID Kriteria</td>
-                        <td width="196" bgcolor="FFFFFF" >Nama</td>
-                        <td width="129" bgcolor="FFFFFF" >Kepentingan</td>
-                        <td width="129" bgcolor="FFFFFF" >Costbenefit</td>
-                        <td width="140" bgcolor="FFFFFF" ><a href="add_kriteria.php"></a>Aksi</td>
+                        <td width="79" bgcolor="FFFFFF">ID Kriteria</td>
+                        <td width="196" bgcolor="FFFFFF">Nama</td>
+                        <td width="129" bgcolor="FFFFFF">Kepentingan</td>
+                        <td width="129" bgcolor="FFFFFF">Costbenefit</td>
+                        <td width="140" bgcolor="FFFFFF"><a href="add_kriteria.php"></a>Edit</td>
+                        <td width="140" bgcolor="FFFFFF"><a href="delete_kriteria.php"></a>Delete</td>
                     </tr>
                     <?php
+                    include("connection/koneksi.php");
+
+                    // Establish the database connection using MySQLi
+                    $servername = "localhost";
+                    $username = "root";
+                    $password = "";
+                    $database = "dbpraktikum";
+
+                    $mysqli = new mysqli($servername, $username, $password, $database);
+
+                    // Check the connection
+                    if ($mysqli->connect_error) {
+                        die("Failed to connect to the database: " . $mysqli->connect_error);
+                    }
+
+                    // Fetch data using MySQLi
                     $querykriteria = $mysqli->query("SELECT * FROM kriteria ORDER BY id_kriteria");
                     while ($datakriteria = $querykriteria->fetch_assoc()) {
                         echo "<tr>";
@@ -62,7 +79,10 @@ if (@$_SESSION['userlogin'] == "") {
                         echo "<td bgcolor='FFFFFF'><a href='add_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Edit</a></td>";
                         echo "<td bgcolor='FFFFFF'><a href='del_kriteria.php?id_kriteria=" . $datakriteria['id_kriteria'] . "'>Delete</a></td>";
                         echo "</tr>";
-                    }     
+                    }
+
+                    // Close the database connection
+                    $mysqli->close();
                     ?>
                 </table>
             </td>
